@@ -6,8 +6,7 @@
 package kata.pkg3;
 
 import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -22,10 +21,11 @@ import org.jfree.ui.ApplicationFrame;
  */
 public class HistogramDisplay extends ApplicationFrame{
     
-    //Map <ChartPanel> CP = new HashMap <>();
+    private final Histogram <String> histogram;
     
-    public HistogramDisplay() {
+    public HistogramDisplay(Histogram <String> histogram) {
         super("Histograma");
+        this.histogram = histogram;
         setContentPane(createPanel());
         pack();
     }
@@ -54,9 +54,10 @@ public class HistogramDisplay extends ApplicationFrame{
     
     private DefaultCategoryDataset createDataset(){
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-        dataSet.addValue(10, "", "ulpgc.es");
-        dataSet.addValue(6, "", "google.es");
-        dataSet.addValue(1, "", "pedro.meme");
+        
+        for (String key : histogram.keySet()){
+            dataSet.addValue(histogram.get(key), "", key);
+        }        
         return dataSet;
     }
 }
